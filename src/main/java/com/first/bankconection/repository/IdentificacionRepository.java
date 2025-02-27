@@ -8,10 +8,6 @@ import com.first.bankconection.model.Identificacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Intraway
- */
 @Repository
 public interface IdentificacionRepository extends JpaRepository<Identificacion, Integer> {
 

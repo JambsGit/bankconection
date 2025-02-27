@@ -4,11 +4,11 @@
  */
 package com.first.bankconection.repository;
 
-import com.first.bankconection.model.Rol;
+import com.first.bankconection.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RolRepository extends JpaRepository<Rol, Integer>{
+public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
     
 }
