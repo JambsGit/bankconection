@@ -29,7 +29,7 @@ public class Transaccion {
     @JoinColumn(name = "id_cuenta", nullable = false)
     private Cuenta cuenta;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_beneficiario", nullable = false)
     private Beneficiario beneficiario;
 
@@ -37,7 +37,7 @@ public class Transaccion {
     @JoinColumn(name = "id_tipo_transaccion", nullable = false)
     private TipoTransaccion tipoTransaccion;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_metodo_pago", nullable = false)
     private MetodoPago metodoPago;
 

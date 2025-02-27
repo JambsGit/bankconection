@@ -24,7 +24,7 @@ public class Cuenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCuenta;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
