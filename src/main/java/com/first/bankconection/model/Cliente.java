@@ -23,6 +23,6 @@ public class Cliente {
     private Integer idCliente;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario_cliente", nullable = false, unique = true)
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private Usuario usuario;
 }

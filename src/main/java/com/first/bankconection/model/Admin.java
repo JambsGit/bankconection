@@ -24,6 +24,6 @@ public class Admin {
     private Integer idAdmin;
 
     @OneToOne
-    @JoinColumn(name = "id_usuario_admin", nullable = false, unique = true)
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true)
     private Usuario usuario;
 }
