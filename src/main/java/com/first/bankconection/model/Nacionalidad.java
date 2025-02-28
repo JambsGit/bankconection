@@ -19,8 +19,8 @@ import lombok.*;
 public class Nacionalidad {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_nacionalidad;
+    @Column(name = "id_nacionalidad")
+    private String id_nacionalidad; 
 
     @Column(name = "nombre_nacionalidad", nullable = false, unique = true,  length = 50)
     private String nombreNacionalidad;

@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.service;
 
-import com.first.bankconection.model.Nacionalidad;
+import com.first.bankconection.model.Usuario;
 import java.util.List;
 import org.hibernate.sql.Insert;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,16 @@ import org.springframework.stereotype.Service;
  * @author Intraway
  */
 @Service
-public interface NacionalidadService {
+public interface UsuarioService {
 
-    List<Nacionalidad> obtenerTodas();
+    List<Usuario> ObtenerTodos();
 
-    Nacionalidad obtenerPorId(Integer id);
+    Usuario obtenerPorId(Integer id);
 
-    void crearNacionalidades();
-    
-    Nacionalidad crearNacionalidad(Nacionalidad nacionalidad);
+    Usuario crearUsuario(Usuario usuario);
 
-    Nacionalidad actualizarNacionalidad(Integer id, Nacionalidad nacionalidad);
+    Usuario actualizarUsuario(Integer id, Usuario usuario);
 
-    void eliminarNacionalidad(Insert id);
+    void eliminarUsuario(Insert id);
+
 }
