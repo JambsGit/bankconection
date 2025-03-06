@@ -20,7 +20,7 @@ public class Nacionalidad {
     
     @Id
     @Column(name = "id_nacionalidad")
-    private String id_nacionalidad; 
+    private String idNacionalidad; 
 
     @Column(name = "nombre_nacionalidad", nullable = false, unique = true,  length = 50)
     private String nombreNacionalidad;

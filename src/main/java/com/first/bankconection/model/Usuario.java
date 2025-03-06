@@ -46,7 +46,6 @@ public class Usuario {
     @Column(nullable = false, unique = true, length = 50)
     private String numIdentificacion;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
 

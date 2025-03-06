@@ -4,10 +4,6 @@
  */
 package com.first.bankconection.model;
 
-/**
- *
- * @author Intraway
- */
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,8 +16,13 @@ public class Barrio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_barrio;
+    private Integer idBarrio;
 
     @Column(name = "nombre_barrio", nullable = false, unique = true,  length = 100)
     private String nombreBarrio;
+    
+    // Constructor for inserting data without ID (let DB generate it)
+    public Barrio(String nombreBarrio) {
+        this.nombreBarrio = nombreBarrio;
+    }
 }

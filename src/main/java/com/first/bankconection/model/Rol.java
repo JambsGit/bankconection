@@ -20,8 +20,13 @@ public class Rol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_rol;
+    private Integer idRol;
 
     @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
     private String nombreRol;
+
+    // Constructor for inserting data without ID (let DB generate it)
+    public Rol(String nombreRol) {
+        this.nombreRol = nombreRol;
+    }
 }

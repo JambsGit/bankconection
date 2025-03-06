@@ -20,8 +20,8 @@ import lombok.*;
 public class Identificacion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_identificacion;
+    @Column(name = "id_identificacion")
+    private String idIdentificacion;
 
     @Column(name = "tipo_identificacion", nullable = false, unique = true,  length = 50)
     private String tipoIdentificacion;
