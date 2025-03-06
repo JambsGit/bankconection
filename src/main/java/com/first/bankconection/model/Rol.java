@@ -16,6 +16,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Rol {
 
     @Id

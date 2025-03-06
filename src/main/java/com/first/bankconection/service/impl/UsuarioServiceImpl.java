@@ -18,6 +18,7 @@ import com.first.bankconection.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,7 @@ public class UsuarioServiceImpl extends InsertarDatosServiceImpl<Usuario, Intege
     private final BarrioRepository barrioRepository;
     private final RolRepository rolRepository;
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder; // For secure password hashing
 
     @Override
     public Usuario actualizar(Integer id, Usuario entity) {
@@ -60,7 +62,7 @@ public class UsuarioServiceImpl extends InsertarDatosServiceImpl<Usuario, Intege
         return usuarioRepository.save(entity);
     }
 
-     @Transactional
+    @Transactional
     public Usuario crearUsuario(UsuarioDTO usuarioDTO) {
         // Fetch Identificacion
         Identificacion identificacion = identificacionRepository.findById(usuarioDTO.getIdIdentificacion())
@@ -94,11 +96,12 @@ public class UsuarioServiceImpl extends InsertarDatosServiceImpl<Usuario, Intege
                 .barrio(barrio)
                 .estadoUsuario(usuarioDTO.getEstadoUsuario())
                 .rol(rol)
-                .passwordHash(usuarioDTO.getPasswordHash())
+                .passwordHash(passwordEncoder.encode(usuarioDTO.getPasswordHash()))
                 .build();
 
         return usuarioRepository.save(usuario);
     }
+
     @Override
     protected List<Usuario> getInitialData() {
         return null;
