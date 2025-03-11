@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.service.impl;
 
-import com.first.bankconection.model.Nacionalidad;
+import com.first.bankconection.model.entities.dataInit.Nacionalidad;
 import com.first.bankconection.repository.NacionalidadRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

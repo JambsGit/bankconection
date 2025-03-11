@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.service.impl;
 
-import com.first.bankconection.model.Barrio;
+import com.first.bankconection.model.entities.dataInit.Barrio;
 import com.first.bankconection.repository.BarrioRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

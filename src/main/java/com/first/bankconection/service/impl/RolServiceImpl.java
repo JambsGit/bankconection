@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.service.impl;
 
-import com.first.bankconection.model.Rol;
+import com.first.bankconection.model.entities.dataInit.Rol;
 import com.first.bankconection.repository.RolRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

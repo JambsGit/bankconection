@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.repository;
 
-import com.first.bankconection.model.Rol;
+import com.first.bankconection.model.entities.dataInit.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.service.impl;
 
-import com.first.bankconection.model.Identificacion;
+import com.first.bankconection.model.entities.dataInit.Identificacion;
 import com.first.bankconection.repository.IdentificacionRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

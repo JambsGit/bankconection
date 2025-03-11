@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.repository;
 
-import com.first.bankconection.model.Tarjeta;
+import com.first.bankconection.model.entities.Tarjeta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
