@@ -4,7 +4,7 @@
  */
 package com.first.bankconection.model.entities;
 
-import com.first.bankconection.model.enums.AreaResponsabilidad;
+import com.first.bankconection.model.enums.AreaResponsabilidadEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +15,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Admin extends Usuario {
 
-    private AreaResponsabilidad areaResponsabilidad;
+    @Enumerated(EnumType.STRING)
+    private AreaResponsabilidadEnum areaResponsabilidad;
 
     private boolean verificado;
 

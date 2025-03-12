@@ -8,7 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
-import com.first.bankconection.model.enums.EstadoSoporte;
+import com.first.bankconection.model.enums.EstadoSoporteEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,7 +33,7 @@ public class Soporte {
     private String detalle;
 
     @Enumerated(EnumType.STRING)
-    private EstadoSoporte estado;
+    private EstadoSoporteEnum estado;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;

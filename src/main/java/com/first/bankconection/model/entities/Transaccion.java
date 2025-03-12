@@ -41,6 +41,10 @@ public class Transaccion extends ProcesoTransaccion {
     @OneToOne
     @JoinColumn(name = "id_metodo_pago", nullable = false)
     private MetodoPago metodoPago;
+    
+    @OneToOne
+    @JoinColumn(name = "id_tarjeta")
+    private Tarjeta tarjeta;
 
     @Column(nullable = false)
     private Double monto;

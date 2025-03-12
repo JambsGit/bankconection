@@ -8,25 +8,25 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
-import com.first.bankconection.model.enums.TipoDeMetodo;
+import com.first.bankconection.model.enums.TipoMetodoEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "metodopago")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class MetodoPago {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMetodoPago;
 
-    @Column(nullable = false)
-    private TipoDeMetodo tipoDeMetodo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_de_metodo", nullable = false, unique = true)
+    private TipoMetodoEnum tipoMetodo;
 
-    @OneToOne
-    @JoinColumn(name = "id_tarjeta")
-    private Tarjeta tarjeta;
 }

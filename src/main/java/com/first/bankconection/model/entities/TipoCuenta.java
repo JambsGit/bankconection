@@ -8,21 +8,24 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.enums.TipoCuentaEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "TipoCuenta")
+@Table(name = "tipocuenta")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class TipoCuenta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTipoCuenta;
 
-    @Column(name = "nombre_tipo_cuenta", nullable = false, unique = true, length = 50)
-    private String nombreTipoCuenta;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nombre_tipo_cuenta", nullable = false, unique = true)
+    private TipoCuentaEnum nombreTipoCuenta;
 }

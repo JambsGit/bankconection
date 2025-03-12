@@ -8,9 +8,8 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
-import com.first.bankconection.model.interfaces.Autenticable;
-import com.first.bankconection.model.enums.EstadoAutenticacion;
-import com.first.bankconection.model.enums.TipoAutenticacion;
+import com.first.bankconection.model.enums.EstadoAutenticacionEnum;
+import com.first.bankconection.model.enums.TipoAutenticacionEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +21,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Autenticacion implements Autenticable {
+public class Autenticacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAutenticacion;
@@ -32,21 +32,19 @@ public class Autenticacion implements Autenticable {
     private Usuario usuario;
 
     @Enumerated(EnumType.STRING)
-    private TipoAutenticacion tipoAutenticacion;
+    private TipoAutenticacionEnum tipoAutenticacion;
 
     @Enumerated(EnumType.STRING)
-    private EstadoAutenticacion estado;
-    
+    private EstadoAutenticacionEnum estado;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaUltimaAutenticacion;
 
-    @Override
     public boolean autenticar(String credencial) {
         // Lógica de autenticación
         return true; // Placeholder
     }
 
-    @Override
     public void actualizarUltimaAutenticacion() {
         this.fechaUltimaAutenticacion = new Date();
     }

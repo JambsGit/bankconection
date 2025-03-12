@@ -4,10 +4,12 @@
  */
 package com.first.bankconection.Controller;
 
-import com.first.bankconection.service.impl.BarrioServiceImpl;
-import com.first.bankconection.service.impl.IdentificacionServiceImpl;
-import com.first.bankconection.service.impl.NacionalidadServiceImpl;
-import com.first.bankconection.service.impl.RolServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.BarrioServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.IdentificacionServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.MetodoPagoServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.NacionalidadServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.RolServiceImpl;
+import com.first.bankconection.service.impl.InsertInitServices.TipoCuentaServiceImpl;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class InicializadorDB {
     private final NacionalidadServiceImpl nacionalidadService;
     private final BarrioServiceImpl barrioService;
     private final RolServiceImpl rolService;
+    private final TipoCuentaServiceImpl insertarTipoCuentaService;
+    private final MetodoPagoServiceImpl metodoPagoServiceImpl;
 
     @PostConstruct
     public void iniciarBaseDeDatos() {
@@ -29,6 +33,9 @@ public class InicializadorDB {
         nacionalidadService.insertarInit();
         barrioService.insertarInit();
         rolService.insertarInit();
+        insertarTipoCuentaService.insertarInit();
+        metodoPagoServiceImpl.insertarInit();
+
     }
 
 }

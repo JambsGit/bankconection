@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.enums.TipoTransaccionEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,5 @@ public class TipoTransaccion {
     private Integer idTipoTransaccion;
 
     @Column(nullable = false, unique = true)
-    private String tipoDeTransaccion;
+    private TipoTransaccionEnum tipoTransaccion;
 }

@@ -6,7 +6,7 @@ package com.first.bankconection.model.entities;
 
 import com.first.bankconection.model.abstractClasses.Persona;
 import com.first.bankconection.model.entities.dataInit.Rol;
-import com.first.bankconection.model.enums.EstadoUsuario;
+import com.first.bankconection.model.enums.EstadoUsuarioEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +30,7 @@ public class Usuario extends Persona {
     private String idRegistro;
 
     @Enumerated(EnumType.STRING)
-    private EstadoUsuario estadoUsuario;
+    private EstadoUsuarioEnum estadoUsuario;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaRegistro;

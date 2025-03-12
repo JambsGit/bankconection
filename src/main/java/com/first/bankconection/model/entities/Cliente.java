@@ -8,7 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
-import com.first.bankconection.model.enums.TipoCliente;
+import com.first.bankconection.model.enums.TipoClienteEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import lombok.*;
 public class Cliente extends Usuario {
 
     @Enumerated(EnumType.STRING)
-    private TipoCliente tipoCliente;
+    private TipoClienteEnum tipoCliente;
 
     private boolean verificado;
 }

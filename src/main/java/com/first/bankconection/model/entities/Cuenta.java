@@ -8,7 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
-import com.first.bankconection.model.enums.EstadoCuenta;
+import com.first.bankconection.model.enums.EstadoCuentaEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,5 +42,5 @@ public class Cuenta {
     private Date fechaApertura;
 
     @Enumerated(EnumType.STRING)
-    private EstadoCuenta estadoCuenta;
+    private EstadoCuentaEnum estadoCuenta;
 }
