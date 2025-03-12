@@ -8,19 +8,19 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public abstract class InsertarDatosService<T, ID> {
+public abstract class InsertarDatosService<Model, ID> {
     
 // Abstract method for getting repository count
     protected abstract long getEntityCount();
 
     // Abstract method for getting initial data
-    protected abstract List<T> getInitialData();
+    protected abstract List<Model> getInitialData();
 
-    protected abstract void saveAllEntities(List<T> entities);
+    protected abstract void saveAllEntities(List<Model> entities);
 
     public void insertarInit() {
         if (getEntityCount() == 0) {  // ✅ Only insert if table is empty
-            List<T> initialData = getInitialData();
+            List<Model> initialData = getInitialData();
             if (!initialData.isEmpty()) {
                 saveAllEntities(initialData);
                 System.out.println("✅ Initial data inserted: " + initialData.size() + " records");

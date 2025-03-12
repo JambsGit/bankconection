@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.enums.TipoTarjetaEnum;
 import jakarta.persistence.*;
 import java.util.Date;
 import lombok.*;
@@ -19,12 +20,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Tarjeta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTarjeta;
 
-    @Column(nullable = false)
-    private String tipoTarjeta;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_tarjeta",nullable = false)
+    private TipoTarjetaEnum tipoTarjeta;
 
     @Column(nullable = false, unique = true)
     private String numeroTarjeta;

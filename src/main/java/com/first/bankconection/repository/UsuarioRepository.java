@@ -5,11 +5,15 @@
 package com.first.bankconection.repository;
 
 import com.first.bankconection.model.entities.Usuario;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
-    
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
+    Optional<Usuario> findByIdRegistro(String idRegistro);
+    Optional<Usuario> findByNumIdentificacion(String numIdentificacion);
+    Optional<Usuario> findByCorreo(String correo);
+    Optional<Usuario> findByTelefono(String telefono);
 }
