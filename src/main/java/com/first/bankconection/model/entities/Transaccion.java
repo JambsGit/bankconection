@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.entities.dataInit.MetodoPago;
 import com.first.bankconection.model.abstractClasses.ProcesoTransaccion;
 import jakarta.persistence.*;
 import lombok.*;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.first.bankconection.service.impl.InsertInitServices;
+package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
 import com.first.bankconection.model.entities.dataInit.Nacionalidad;
 import com.first.bankconection.repository.NacionalidadRepository;

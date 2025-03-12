@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.first.bankconection.service.impl.InsertInitServices;
+package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
-import com.first.bankconection.model.entities.TipoCuenta;
+import com.first.bankconection.model.entities.dataInit.TipoCuenta;
 import com.first.bankconection.model.enums.TipoCuentaEnum;
 import com.first.bankconection.repository.TipoCuentaRepository;
 import com.first.bankconection.service.InsertarDatosService;

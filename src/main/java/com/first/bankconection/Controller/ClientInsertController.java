@@ -5,11 +5,16 @@
 package com.first.bankconection.Controller;
 
 import com.first.bankconection.model.entities.Usuario;
-import com.first.bankconection.service.impl.RegisterUsuarioServiceImpl;
+import com.first.bankconection.service.impl.InsertDataServiceImpl.RegisterUsuarioServiceImpl;
+import jakarta.transaction.Transactional;
 import java.util.Collections;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,7 @@ public class ClientInsertController {
 
     private final RegisterUsuarioServiceImpl usuarioService;
 
+    // 🔹 Create a client (Only if idRol = 2)
     @PostMapping("/crear")
     public ResponseEntity<?> crearCliente(@RequestBody Usuario usuario) {
         try {
@@ -38,5 +44,54 @@ public class ClientInsertController {
             return ResponseEntity.badRequest().body(
                     Collections.singletonMap("error", e.getMessage()));
         }
+    }
+    
+    // 🔹 Update a client (Only if idRol = 2)
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> actualizarCliente(@PathVariable Integer id, @RequestBody Usuario usuario) {
+        Optional<Usuario> existingUser = usuarioService.obtenerPorId(id);
+
+        // ✅ Check if user exists
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Error: Cliente no encontrado."));
+        }
+
+        Usuario cliente = existingUser.get();
+
+        // ✅ Validate that only clients can be updated
+        if (cliente.getRol().getIdRol() != 2) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Solo se pueden actualizar clientes"));
+        }
+
+        // ✅ Update user fields
+        usuarioService.actualizar(id, usuario);
+        return ResponseEntity.ok(Collections.singletonMap("message", "✅ Cliente actualizado correctamente."));
+    }
+
+    // 🔹 Delete a client (Only if idRol = 2)
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> eliminarCliente(@PathVariable Integer id) {
+        Optional<Usuario> existingUser = usuarioService.obtenerPorId(id);
+
+        // ✅ Check if user exists
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Error: Cliente no encontrado."));
+        }
+
+        Usuario cliente = existingUser.get();
+
+        // ✅ Validate that only clients can be deleted
+        if (cliente.getRol().getIdRol() != 2) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Solo se pueden eliminar clientes"));
+        }
+
+        usuarioService.eliminarPorId(id);
+        return ResponseEntity.ok(Collections.singletonMap("message", "✅ Cliente eliminado correctamente."));
     }
 }

@@ -4,14 +4,17 @@
  */
 package com.first.bankconection.service;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface AbstractPersonaService<Model> {
+public interface InterfacePersonaService<Model> {
 
     Model crear(Model entity);
 
-    Model actualizar(Integer id, Model entity);
+    Optional<Model> actualizar(Integer id, Model entity);
 
-    void eliminar(Integer id);
+    Optional<Model> obtenerPorId(Integer id);
+
+    Optional<Boolean> eliminarPorId(Integer id);
 }

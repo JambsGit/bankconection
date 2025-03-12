@@ -2,31 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.first.bankconection.model.entities;
+package com.first.bankconection.model.entities.dataInit;
 
 /**
  *
  * @author Intraway
  */
-import com.first.bankconection.model.enums.TipoMetodoEnum;
+import com.first.bankconection.model.enums.TipoCuentaEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "metodopago")
+@Table(name = "tipocuenta")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MetodoPago {
+public class TipoCuenta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMetodoPago;
+    private Integer idTipoCuenta;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_de_metodo", nullable = false, unique = true)
-    private TipoMetodoEnum tipoMetodo;
-
+    @Column(name = "nombre_tipo_cuenta", nullable = false, unique = true)
+    private TipoCuentaEnum nombreTipoCuenta;
 }

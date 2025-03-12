@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.entities.dataInit.TipoCuenta;
 import com.first.bankconection.model.enums.EstadoCuentaEnum;
 import jakarta.persistence.*;
 import lombok.*;
