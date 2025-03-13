@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public abstract class InsertarDatosService<Model, ID> {
+public abstract class InsertarDatosServiceAbstract<Model, ID> {
     
 // Abstract method for getting repository count
     protected abstract long getEntityCount();

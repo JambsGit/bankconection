@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public abstract class AbstractRegisterUsuarioService {
+public abstract class RegisterUsuarioServiceAbstract {
 
     protected final UsuarioRepository usuarioRepository;
     protected final IdentificacionRepository identificacionRepository;

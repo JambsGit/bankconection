@@ -5,13 +5,14 @@
 package com.first.bankconection.Controller;
 
 import com.first.bankconection.model.entities.Usuario;
-import com.first.bankconection.service.impl.InsertDataServiceImpl.RegisterUsuarioServiceImpl;
+import com.first.bankconection.service.impl.ManagementClientServiceImpl.RegisterClientServiceImpl;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/cliente")
 @RequiredArgsConstructor
-public class ClientInsertController {
+public class ClientRegisterController {
 
-    private final RegisterUsuarioServiceImpl usuarioService;
+    private final RegisterClientServiceImpl usuarioService;
 
     // 🔹 Create a client (Only if idRol = 2)
     @PostMapping("/crear")
@@ -33,7 +34,7 @@ public class ClientInsertController {
             // 🔹 Validate that only clients can be created
             if (usuario.getRol().getIdRol() != 2) {
                 return ResponseEntity.badRequest().body(
-                        Collections.singletonMap("error", "❌ Solo se pueden registrar clientes con idRol = 2"));
+                        Collections.singletonMap("error", "❌ Solo se pueden registrar clientes"));
             }
 
             // 🔹 Call service to create client
@@ -45,7 +46,28 @@ public class ClientInsertController {
                     Collections.singletonMap("error", e.getMessage()));
         }
     }
-    
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obtenerClientePorId(@PathVariable Integer id) {
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(id);
+
+        // ✅ Check if user exists
+        if (usuarioOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Error: Cliente no encontrado."));
+        }
+
+        Usuario usuario = usuarioOpt.get();
+
+        // ✅ Validate that the user is a client (idRol = 2)
+        if (usuario.getRol().getIdRol() != 2) {
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "❌ Error: El usuario no es un cliente."));
+        }
+
+        return ResponseEntity.ok(usuario);
+    }
+
     // 🔹 Update a client (Only if idRol = 2)
     @PutMapping("/{id}")
     @Transactional

@@ -7,7 +7,7 @@ package com.first.bankconection.service.impl.InsertInitServicesImpl;
 import com.first.bankconection.model.entities.dataInit.TipoCuenta;
 import com.first.bankconection.model.enums.TipoCuentaEnum;
 import com.first.bankconection.repository.TipoCuentaRepository;
-import com.first.bankconection.service.InsertarDatosService;
+import com.first.bankconection.service.InsertarDatosServiceAbstract;
 import jakarta.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class TipoCuentaServiceImpl extends InsertarDatosService<TipoCuenta, Integer> {
+public class TipoCuentaServiceImpl extends InsertarDatosServiceAbstract<TipoCuenta, Integer> {
 
     private final TipoCuentaRepository tipoCuentaRepository;
 

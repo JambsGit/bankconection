@@ -6,13 +6,13 @@ package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
 import com.first.bankconection.model.entities.dataInit.Nacionalidad;
 import com.first.bankconection.repository.NacionalidadRepository;
-import com.first.bankconection.service.InsertarDatosService;
+import com.first.bankconection.service.InsertarDatosServiceAbstract;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NacionalidadServiceImpl extends InsertarDatosService<Nacionalidad, String> {
+public class NacionalidadServiceImpl extends InsertarDatosServiceAbstract<Nacionalidad, String> {
 
     @Autowired
     private NacionalidadRepository nacionalidadRepository;

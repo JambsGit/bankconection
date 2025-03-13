@@ -6,13 +6,13 @@ package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
 import com.first.bankconection.model.entities.dataInit.Barrio;
 import com.first.bankconection.repository.BarrioRepository;
-import com.first.bankconection.service.InsertarDatosService;
+import com.first.bankconection.service.InsertarDatosServiceAbstract;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BarrioServiceImpl extends InsertarDatosService<Barrio, Integer> {
+public class BarrioServiceImpl extends InsertarDatosServiceAbstract<Barrio, Integer> {
 
     @Autowired
     private BarrioRepository barrioRepository;
