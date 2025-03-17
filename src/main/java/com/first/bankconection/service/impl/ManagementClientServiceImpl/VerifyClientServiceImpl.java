@@ -6,6 +6,8 @@ package com.first.bankconection.service.impl.ManagementClientServiceImpl;
 
 import com.first.bankconection.model.entities.Cliente;
 import com.first.bankconection.model.entities.Usuario;
+import com.first.bankconection.model.enums.EstadoCuentaEnum;
+import com.first.bankconection.repository.CuentaRepository;
 import com.first.bankconection.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import java.util.Date;
@@ -17,7 +19,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class VerifyClientServiceImpl {
 
-    protected final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final CuentaRepository cuentaRepository;
 
     @Transactional
     public Optional<Cliente> verificarCliente(Integer id, boolean verificado) {
@@ -37,6 +40,14 @@ public class VerifyClientServiceImpl {
         Cliente cliente = (Cliente) usuario;
         cliente.setVerificado(verificado);  // ✅ Set verification status
         cliente.setFechaActualizacion(new Date()); // ✅ Update modification date
+
+        // 🔹 Check if the client has an associated account
+        if (cliente.getCuenta() != null) {
+            // 🔹 Update account status based on verification
+            EstadoCuentaEnum estadoCuenta = verificado ? EstadoCuentaEnum.ACTIVO : EstadoCuentaEnum.INACTIVO;
+            cliente.getCuenta().setEstadoCuenta(estadoCuenta);
+            cuentaRepository.save(cliente.getCuenta());
+        }
 
         return Optional.of(usuarioRepository.save(cliente));
     }

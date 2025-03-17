@@ -4,24 +4,32 @@
  */
 package com.first.bankconection.service.impl.ManagementClientServiceImpl;
 
-import com.first.bankconection.model.entities.Admin;
 import com.first.bankconection.model.entities.Cliente;
+import com.first.bankconection.model.entities.Cuenta;
 import com.first.bankconection.model.entities.Usuario;
-import com.first.bankconection.model.enums.AreaResponsabilidadEnum;
+import com.first.bankconection.model.entities.dataInit.Rol;
+import com.first.bankconection.model.entities.dataInit.TipoCuenta;
+import com.first.bankconection.model.enums.EstadoCuentaEnum;
 import com.first.bankconection.model.enums.EstadoUsuarioEnum;
 import com.first.bankconection.model.enums.TipoClienteEnum;
+import com.first.bankconection.model.enums.TipoCuentaEnum;
+import com.first.bankconection.model.enums.TipoRolEnum;
 import com.first.bankconection.repository.BarrioRepository;
+import com.first.bankconection.repository.CuentaRepository;
 import com.first.bankconection.repository.IdentificacionRepository;
 import com.first.bankconection.repository.NacionalidadRepository;
 import com.first.bankconection.repository.RolRepository;
+import com.first.bankconection.repository.TipoCuentaRepository;
 import com.first.bankconection.repository.UsuarioRepository;
-import com.first.bankconection.service.RegisterUsuarioServiceAbstract;
+import com.first.bankconection.service.AbstractClases.RegisterUsuarioServiceAbstract;
 import com.first.bankconection.service.Interfaces.InterfacePersonaService;
 import jakarta.transaction.Transactional;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Random;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +46,24 @@ public class RegisterClientServiceImpl extends RegisterUsuarioServiceAbstract im
         super(usuarioRepository, identificacionRepository, nacionalidadRepository, barrioRepository, rolRepository, passwordEncoder);
     }
 
+    @Autowired
+    private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private TipoCuentaRepository tipoCuentaRepository;
+
     @Override
     @Transactional
     public Usuario crear(Usuario usuario) {
         // 🔹 Check for unique fields
         checkUniqueFields(usuario);
+
+        // 🔹 Assign default role if none is provided
+        if (usuario.getRol() == null) {
+            Rol defaultRole = rolRepository.findByNombreRol(TipoRolEnum.CLIENTE)
+                    .orElseThrow(() -> new RuntimeException("❌ Error: Rol CLIENTE no encontrado en la base de datos."));
+            usuario.setRol(defaultRole);
+        }
 
         // 🔹 Validate and set foreign keys
         usuario.setIdentificacion(validateIdentificacion(usuario.getIdentificacion().getIdIdentificacion()));
@@ -62,22 +83,19 @@ public class RegisterClientServiceImpl extends RegisterUsuarioServiceAbstract im
         // 🔹 Log password (For debugging, should be sent via email in production)
         System.out.println("🔹 Temporary password for " + usuario.getCorreo() + " -> " + tempPassword);
 
-        // 🔹 Assign User Type Based on Role
-        if (usuario.getRol().getIdRol() == 2) { // Cliente
-            Cliente cliente = new Cliente();
-            cliente.setVerificado(false);
-            cliente.setTipoCliente(TipoClienteEnum.REGULAR);
-            copyUserData(cliente, usuario);
-            return usuarioRepository.save(cliente);
-        } else if (usuario.getRol().getIdRol() == 1) { // Admin
-            Admin admin = new Admin();
-            admin.setVerificado(true);
-            admin.setAreaResponsabilidad(AreaResponsabilidadEnum.GENERAL);
-            copyUserData(admin, usuario);
-            return usuarioRepository.save(admin);
-        }
+        // 🔹 Create client
+        Cliente cliente = new Cliente();
+        cliente.setVerificado(false);
+        cliente.setTipoCliente(TipoClienteEnum.REGULAR);
+        copyUserData(cliente, usuario);
 
-        return usuarioRepository.save(usuario);
+        // ✅ Save the new client
+        Cliente savedCliente = usuarioRepository.save(cliente);
+
+        // 🔹 Automatically create an account
+        crearCuentaParaCliente(savedCliente);
+
+        return savedCliente;
     }
 
     /**
@@ -90,26 +108,45 @@ public class RegisterClientServiceImpl extends RegisterUsuarioServiceAbstract im
         return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
-    @Transactional
-    public Optional<Cliente> verificarCliente(Integer id, boolean verificado) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
 
-        if (usuarioOpt.isEmpty()) {
-            throw new RuntimeException("❌ Error: Cliente no encontrado.");
-        }
+    private String generarNumeroCuentaUnico() {
+        Random random = new Random();
+        String numeroCuenta;
 
-        Usuario usuario = usuarioOpt.get();
+        do {
+            numeroCuenta = "CTA-" + (10000000 + random.nextInt(90000000)); // Generate 8-digit random number
+        } while (cuentaRepository.existsByNumeroCuenta(numeroCuenta)); // Ensure uniqueness
 
-        // ✅ Ensure only clients can be verified
-        if (!(usuario instanceof Cliente)) {
-            throw new RuntimeException("❌ Error: Solo los clientes pueden ser verificados.");
-        }
+        return numeroCuenta;
+    }
 
-        Cliente cliente = (Cliente) usuario;
-        cliente.setVerificado(verificado);  // ✅ Set verification status
-        cliente.setFechaActualizacion(new Date()); // ✅ Update modification date
+    private void crearCuentaParaCliente(Cliente cliente) {
+        // 🔹 Get default account type (AHORRO)
+        TipoCuenta tipoCuenta = tipoCuentaRepository.findByNombreTipoCuenta(TipoCuentaEnum.AHORRO)
+                .orElseThrow(() -> new RuntimeException("❌ Error: Tipo de cuenta AHORRO no encontrado."));
 
-        return Optional.of(usuarioRepository.save(cliente));
+        // 🔹 Determine account status based on client verification
+        EstadoCuentaEnum estadoCuenta = cliente.isVerificado() ? EstadoCuentaEnum.ACTIVO : EstadoCuentaEnum.INACTIVO;
+
+        // 🔹 Create new account
+        Cuenta cuenta = new Cuenta(
+                cliente,
+                tipoCuenta,
+                generarNumeroCuentaUnico(),
+                0.0, // Default balance
+                estadoCuenta // Set account status dynamically
+        );
+
+        // ✅ Save the new account
+        cuentaRepository.save(cuenta);
+
+        // ✅ Associate the account with the client
+        cliente.setCuenta(cuenta);
+        usuarioRepository.save(cliente);
+
+        System.out.println("✅ Cuenta creada para cliente: " + cliente.getId()
+                + " Número: " + cuenta.getNumeroCuenta()
+                + " Estado: " + estadoCuenta);
     }
 
     @Override
@@ -121,8 +158,24 @@ public class RegisterClientServiceImpl extends RegisterUsuarioServiceAbstract im
     @Transactional
     public Optional<Usuario> actualizar(Integer id, Usuario usuarioActualizado) {
         return usuarioRepository.findById(id).map(existingUser -> {
+
+            // ✅ Ensure `estado_usuario` is never null
+            if (usuarioActualizado.getEstadoUsuario() == null) {
+                usuarioActualizado.setEstadoUsuario(existingUser.getEstadoUsuario()); // Keep existing state
+            }
+
+            // ✅ Ensure `password_hash` is never null
+            if (usuarioActualizado.getPasswordHash() == null || usuarioActualizado.getPasswordHash().isEmpty()) {
+                usuarioActualizado.setPasswordHash(existingUser.getPasswordHash()); // Keep existing password
+            } else {
+                // Hash the new password before saving it
+                usuarioActualizado.setPasswordHash(passwordEncoder.encode(usuarioActualizado.getPasswordHash()));
+            }
+
+            // ✅ Copy updated fields
             copyUserData(existingUser, usuarioActualizado);
             existingUser.setFechaActualizacion(new Date()); // ✅ Update modification date
+
             return usuarioRepository.save(existingUser);
         });
     }

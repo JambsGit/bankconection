@@ -5,7 +5,7 @@
 package com.first.bankconection.Controller;
 
 import com.first.bankconection.model.entities.Cliente;
-import com.first.bankconection.service.impl.ManagementClientServiceImpl.RegisterClientServiceImpl;
+import com.first.bankconection.service.impl.ManagementClientServiceImpl.VerifyClientServiceImpl;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class VerifyClientController {
 
-    private final RegisterClientServiceImpl clientVerifyService;
+    private final VerifyClientServiceImpl clientVerifyService;
 
     @PutMapping("/verificar/{id}")
     @Transactional

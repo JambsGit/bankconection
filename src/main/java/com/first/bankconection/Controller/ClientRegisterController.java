@@ -31,11 +31,6 @@ public class ClientRegisterController {
     @PostMapping("/crear")
     public ResponseEntity<?> crearCliente(@RequestBody Usuario usuario) {
         try {
-            // 🔹 Validate that only clients can be created
-            if (usuario.getRol().getIdRol() != 2) {
-                return ResponseEntity.badRequest().body(
-                        Collections.singletonMap("error", "❌ Solo se pueden registrar clientes"));
-            }
 
             // 🔹 Call service to create client
             Usuario nuevoUsuario = usuarioService.crear(usuario);

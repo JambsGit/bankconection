@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.first.bankconection.model.entities.dataInit.TipoCuenta;
 import com.first.bankconection.model.enums.EstadoCuentaEnum;
 import jakarta.persistence.*;
@@ -17,10 +18,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "cuenta")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Cuenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,7 @@ public class Cuenta {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
+    @JsonBackReference
     private Cliente cliente;
 
     @ManyToOne
@@ -44,4 +46,14 @@ public class Cuenta {
 
     @Enumerated(EnumType.STRING)
     private EstadoCuentaEnum estadoCuenta;
+    
+        // ✅ New Constructor Without `idCuenta` (Auto-generated)
+    public Cuenta(Cliente cliente, TipoCuenta tipoCuenta, String numeroCuenta, Double saldo, EstadoCuentaEnum estadoCuenta) {
+        this.cliente = cliente;
+        this.tipoCuenta = tipoCuenta;
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldo;
+        this.fechaApertura = new Date(); // Set current date
+        this.estadoCuenta = estadoCuenta;
+    }
 }

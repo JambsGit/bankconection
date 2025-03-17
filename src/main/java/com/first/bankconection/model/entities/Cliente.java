@@ -8,13 +8,15 @@ package com.first.bankconection.model.entities;
  *
  * @author Intraway
  */
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.first.bankconection.model.enums.TipoClienteEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@DiscriminatorValue("CLIENTE")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente extends Usuario {
@@ -23,4 +25,8 @@ public class Cliente extends Usuario {
     private TipoClienteEnum tipoCliente;
 
     private boolean verificado;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Cuenta cuenta;  // ✅ Add One-to-One Relationship with Cuenta
 }

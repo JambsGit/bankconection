@@ -5,8 +5,10 @@
 package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
 import com.first.bankconection.model.entities.dataInit.Rol;
+import com.first.bankconection.model.enums.TipoRolEnum;
 import com.first.bankconection.repository.RolRepository;
-import com.first.bankconection.service.InsertarDatosServiceAbstract;
+import com.first.bankconection.service.AbstractClases.InsertarDatosServiceAbstract;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +52,9 @@ public class RolServiceImpl extends InsertarDatosServiceAbstract<Rol, Integer>{
 
     @Override
     protected List<Rol> getInitialData() {
-        return List.of(
-                new Rol("Administrador"),
-                new Rol("Cliente")
+        return Arrays.asList(
+                new Rol(2, TipoRolEnum.CLIENTE),
+                new Rol(1, TipoRolEnum.ADMINISTRADOR)
         );
     }
 

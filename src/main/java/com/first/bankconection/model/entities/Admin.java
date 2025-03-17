@@ -9,8 +9,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@DiscriminatorValue("ADMIN")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin extends Usuario {

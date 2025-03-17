@@ -7,7 +7,7 @@ package com.first.bankconection.service.impl.InsertInitServicesImpl;
 import com.first.bankconection.model.entities.dataInit.TipoCuenta;
 import com.first.bankconection.model.enums.TipoCuentaEnum;
 import com.first.bankconection.repository.TipoCuentaRepository;
-import com.first.bankconection.service.InsertarDatosServiceAbstract;
+import com.first.bankconection.service.AbstractClases.InsertarDatosServiceAbstract;
 import jakarta.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;

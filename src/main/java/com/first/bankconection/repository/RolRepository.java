@@ -5,10 +5,12 @@
 package com.first.bankconection.repository;
 
 import com.first.bankconection.model.entities.dataInit.Rol;
+import com.first.bankconection.model.enums.TipoRolEnum;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Integer>{
-    
+     Optional<Rol> findByNombreRol(TipoRolEnum nombreRol); 
 }

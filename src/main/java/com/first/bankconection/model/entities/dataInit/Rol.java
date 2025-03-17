@@ -8,6 +8,7 @@ package com.first.bankconection.model.entities.dataInit;
  *
  * @author Intraway
  */
+import com.first.bankconection.model.enums.TipoRolEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,14 +21,11 @@ import lombok.*;
 public class Rol {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_rol", nullable = false)
     private Integer idRol;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
-    private String nombreRol;
+    private TipoRolEnum nombreRol;
 
-    // Constructor for inserting data without ID (let DB generate it)
-    public Rol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
 }

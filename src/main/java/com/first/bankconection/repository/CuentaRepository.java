@@ -4,11 +4,17 @@
  */
 package com.first.bankconection.repository;
 
+import com.first.bankconection.model.entities.Cliente;
 import com.first.bankconection.model.entities.Cuenta;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CuentaRepository extends JpaRepository<Cuenta, Integer>{
-    
+public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
+
+    boolean existsByNumeroCuenta(String numeroCuenta);
+
+    Optional<Cuenta> findByCliente(Cliente cliente);
+
 }

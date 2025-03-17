@@ -6,7 +6,7 @@ package com.first.bankconection.service.impl.InsertInitServicesImpl;
 
 import com.first.bankconection.model.entities.dataInit.Barrio;
 import com.first.bankconection.repository.BarrioRepository;
-import com.first.bankconection.service.InsertarDatosServiceAbstract;
+import com.first.bankconection.service.AbstractClases.InsertarDatosServiceAbstract;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
